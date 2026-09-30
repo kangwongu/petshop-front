@@ -57,3 +57,12 @@
 - petshop-back Phase 4(연동 검증)와 동일한 전체 구매 플로우 최종 확인
 
 **완료 기준**: `constitution.md`의 성공 기준 충족.
+
+## Phase 6. 배포 (TR-08)
+
+- Vercel 프로젝트 생성, GitHub 저장소 연동 (push 시 자동 배포)
+- 환경변수(`NEXT_PUBLIC_API_URL` 등) Vercel 프로젝트 설정에 등록 (Production/Preview 분리 고려)
+- petshop-back(AWS) CORS 허용 오리진에 Vercel 배포 도메인 추가 확인
+- 커스텀 도메인 연결 여부 결정 (필요 시)
+
+**완료 기준**: Vercel 배포 URL에서 홈 → 상품 상세 → 장바구니 → 주문서 → Toss 결제 팝업 → 결제 완료 플로우가 실제 배포 환경에서 끊김 없이 동작한다.

@@ -41,6 +41,7 @@
 | TR-05 | 주소 검색 | `react-daum-postcode` |
 | TR-06 | API 계약 | `petshop-frontend-prev/src/lib/api.ts`를 계약 원본으로 이식 (`ApiProduct`, `ApiOrder`, `CreateOrderPayload`, `PaymentConfirmPayload`, `ApiPayment`, 엔드포인트: `GET /api/products`, `GET /api/products/:id`, `POST /api/orders`, `POST /api/payments/confirm`). petshop-back Phase 1~3 구현 후 Swagger(`/swagger-ui.html`)로 재검증 필요. **Product 재검증 완료(Phase 1)**: petshop-back `ProductController`/`ProductRes` 기준 실응답은 `{ id, name, price, categoryId, categoryName, imageUrl }` — petshop-frontend-prev의 `ApiProduct`에는 없던 `imageUrl: string \| null` 필드가 추가되어 있다(S3 미연동으로 현재 시딩 데이터는 전부 `null`). `GET /api/products`는 `categoryId` 쿼리 파라미터를 선택적으로 지원한다. `imageUrl`은 계약 타입에는 반영하되, 실제 값이 채워지기 전까지 Phase 1 UI에서는 사용하지 않는다(브랜드/콘텐츠 절 참고) |
 | TR-07 | 렌더링 원칙 | 인증이 필요 없는 읽기 전용 데이터(상품 목록/상세, 결제 승인 결과)는 Server Component에서 fetch. 브라우저 API/로컬 상태가 필요한 부분(장바구니, 주문 폼, 주소 검색, Toss SDK 호출)만 Client Component로 분리 |
+| TR-08 | 배포 | Vercel에 배포한다. GitHub 저장소 연동으로 push 시 자동 빌드/배포(프리뷰+프로덕션)되는 것을 CI/CD로 사용하고 별도 파이프라인은 구성하지 않는다. petshop-back은 AWS에 별도로 배포되므로, 프론트(Vercel)↔백엔드(AWS) 간 CORS 허용 오리진과 `NEXT_PUBLIC_API_URL` 등 환경변수를 Vercel 프로젝트 설정에 등록해야 한다 |
 
 ## UI/UX
 
