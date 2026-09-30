@@ -1,10 +1,18 @@
 "use client";
 
 import Link from "next/link";
+import { useEffect } from "react";
+import { useCartStore } from "@/lib/store/cart";
 
-// TODO(Phase 2): 실제 카트 개수는 lib/store/cart.ts(Zustand)에서 구독한다. 지금은 디자인 확인용 placeholder.
 export default function Navbar() {
-  const cartCount = 0;
+  const items = useCartStore((s) => s.items);
+  const hasHydrated = useCartStore((s) => s.hasHydrated);
+
+  useEffect(() => {
+    useCartStore.persist.rehydrate();
+  }, []);
+
+  const cartCount = hasHydrated ? items.reduce((sum, item) => sum + item.quantity, 0) : 0;
 
   return (
     <header className="sticky top-0 z-50 bg-bg border-b border-border">
