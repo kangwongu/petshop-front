@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { formatPrice } from "@/lib/format";
+import { useCartStore } from "@/lib/store/cart";
 
 type Props = {
   productId: number;
@@ -10,12 +11,17 @@ type Props = {
 
 export default function ProductActions({ productId, price }: Props) {
   const [quantity, setQuantity] = useState(1);
+  const [addedToCart, setAddedToCart] = useState(false);
+  const addItem = useCartStore((s) => s.addItem);
 
   const decrease = () => setQuantity((q) => Math.max(1, q - 1));
   const increase = () => setQuantity((q) => q + 1);
 
-  // TODO(Phase 2): lib/store/cart.ts(Zustand)의 addItem(productId, quantity)로 교체
-  const handleAddToCart = () => {};
+  const handleAddToCart = () => {
+    addItem(productId, quantity);
+    setAddedToCart(true);
+    setTimeout(() => setAddedToCart(false), 2000);
+  };
 
   // TODO(Phase 3): router.push(`/order?productId=${productId}&quantity=${quantity}`)로 교체
   const handleBuyNow = () => {};
@@ -56,7 +62,7 @@ export default function ProductActions({ productId, price }: Props) {
           onClick={handleAddToCart}
           className="h-12 flex-1 border border-border-strong text-sm font-semibold text-white transition-colors hover:border-border-hover"
         >
-          장바구니 담기
+          {addedToCart ? "✓ 담겼어요" : "장바구니 담기"}
         </button>
         <button
           type="button"
