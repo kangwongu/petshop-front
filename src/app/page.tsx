@@ -1,6 +1,6 @@
 import CategoryFilter from "@/components/CategoryFilter";
 import ProductCard from "@/components/ProductCard";
-import { DEMO_PRODUCTS } from "@/lib/demo-products";
+import { api } from "@/lib/api";
 
 type Props = {
   searchParams: Promise<{ category?: string }>;
@@ -10,8 +10,9 @@ export default async function HomePage({ searchParams }: Props) {
   const { category } = await searchParams;
   const activeId = category ? Number(category) : 0;
 
+  const products = await api.products.list();
   const filtered =
-    activeId === 0 ? DEMO_PRODUCTS : DEMO_PRODUCTS.filter((p) => p.categoryId === activeId);
+    activeId === 0 ? products : products.filter((p) => p.categoryId === activeId);
 
   return (
     <div className="max-w-[1200px] mx-auto px-4">
@@ -40,7 +41,7 @@ export default async function HomePage({ searchParams }: Props) {
         </div>
       </section>
 
-      <CategoryFilter activeId={activeId} countsById={{ 0: DEMO_PRODUCTS.length }} />
+      <CategoryFilter activeId={activeId} countsById={{ 0: products.length }} />
 
       <section className="mt-6 mb-16">
         <div className="flex items-center justify-between mb-4">
