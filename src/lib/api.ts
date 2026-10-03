@@ -1,6 +1,9 @@
 // petshop-back API 계약 (TR-06). petshop-frontend-prev/src/lib/api.ts를 원본으로 이식했다.
 // Product는 실제 응답(ProductController/ProductRes)으로 재검증 완료 (docs/specification.md TR-06 참고).
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8080";
+if (!process.env.NEXT_PUBLIC_API_URL) {
+  throw new Error("NEXT_PUBLIC_API_URL 환경변수가 설정되지 않았습니다.");
+}
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export type ApiProduct = {
   id: number;
