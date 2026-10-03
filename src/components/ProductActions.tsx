@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { formatPrice } from "@/lib/format";
 import { useCartStore } from "@/lib/store/cart";
 
@@ -10,6 +11,7 @@ type Props = {
 };
 
 export default function ProductActions({ productId, price }: Props) {
+  const router = useRouter();
   const [quantity, setQuantity] = useState(1);
   const [addedToCart, setAddedToCart] = useState(false);
   const addItem = useCartStore((s) => s.addItem);
@@ -23,8 +25,9 @@ export default function ProductActions({ productId, price }: Props) {
     setTimeout(() => setAddedToCart(false), 2000);
   };
 
-  // TODO(Phase 3): router.push(`/order?productId=${productId}&quantity=${quantity}`)로 교체
-  const handleBuyNow = () => {};
+  const handleBuyNow = () => {
+    router.push(`/order?productId=${productId}&quantity=${quantity}`);
+  };
 
   return (
     <div data-product-id={productId}>

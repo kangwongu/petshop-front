@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useCartStore } from "@/lib/store/cart";
 import { api, type ApiProduct } from "@/lib/api";
 import { formatPrice } from "@/lib/format";
@@ -9,6 +10,7 @@ import { formatPrice } from "@/lib/format";
 type CartRow = { productId: number; quantity: number; product: ApiProduct };
 
 export default function CartPage() {
+  const router = useRouter();
   const items = useCartStore((s) => s.items);
   const hasHydrated = useCartStore((s) => s.hasHydrated);
   const updateQuantity = useCartStore((s) => s.updateQuantity);
@@ -172,8 +174,7 @@ export default function CartPage() {
         </Link>
         <button
           type="button"
-          // TODO(Phase 3): router.push("/order?from=cart")
-          onClick={() => {}}
+          onClick={() => router.push("/order?from=cart")}
           className="flex-1 h-14 bg-white text-black text-sm font-bold hover:bg-cream transition-colors"
         >
           {formatPrice(totalAmount)} 주문하기
