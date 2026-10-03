@@ -28,6 +28,15 @@ export default async function ProductDetailPage({ params }: Props) {
       </nav>
 
       <div className="max-w-[480px]">
+        {product.imageUrl && (
+          <div className="mb-6 aspect-square w-full overflow-hidden border border-border bg-card">
+            <img
+              src={product.imageUrl}
+              alt={product.name}
+              className="h-full w-full object-cover"
+            />
+          </div>
+        )}
         <p className="text-[13px] text-subtle">{product.categoryName}</p>
         <h1 className="mt-1 text-2xl font-bold text-white">{product.name}</h1>
         <p className="mt-3 text-xl font-bold text-white">{formatPrice(product.price)}</p>
